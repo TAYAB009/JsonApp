@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:jsonobj/data_class.dart';
@@ -31,24 +30,23 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  void mapJson() async {
+  void getData() async {
     final jsonString = await rootBundle.loadString('assets/data.json');
-    //print(jsonString.runtimeType);
-    final data = Tutorial.formJson(jsonDecode(jsonString));
-
-    //print(Author.fromJson(data.name));
-    //print('${data.name} ${data.age}');
-    print('''
-              
-             Name: ${data.author.name}
-             Title: ${data.title} 
-             Description: ${data.descripiton}
-             Age: ${data.author.age}
-     ''');
+    final data = jsonDecode(jsonString)['tags'] as List;
+    //print(data);
+    //List<Tag> tagObjs = data.map((e) => Tag.fromJson(e)).toList();
+    List<Tag> tagObj = data.map((e) => Tag.fromJson(e)).toList();
+    print(tagObj.runtimeType);
+    for (var i = 0; i < tagObj.length; i++) {
+      print(tagObj[i].name);
+      print(tagObj[i].quantity);
+    }
+    //return tagObj;
   }
 
   @override
   Widget build(BuildContext context) {
+    // print(getData());
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
@@ -59,7 +57,7 @@ class _MyHomePageState extends State<MyHomePage> {
           children: <Widget>[
             TextButton(
               onPressed: () {
-                mapJson();
+                getData();
               },
               child: const Text('Print Data'),
             )

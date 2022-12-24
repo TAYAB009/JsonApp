@@ -1,33 +1,20 @@
-class Author {
+class Tag {
   final String name;
-  final int age;
-  Author({
+  final int quantity;
+  Tag({
     required this.name,
-    required this.age,
+    required this.quantity,
   });
 
-  factory Author.fromJson(dynamic json) {
-    return Author(
+  factory Tag.fromJson(dynamic json) {
+    return Tag(
       name: json['name'] as String,
-      age: json['age'] as int,
+      quantity: json['quantity'] as int,
     );
   }
-}
 
-class Tutorial {
-  final String title;
-  final String descripiton;
-  Author author;
-  Tutorial({
-    required this.title,
-    required this.descripiton,
-    required this.author,
-  });
-
-  factory Tutorial.formJson(dynamic json) {
-    return Tutorial(
-        title: json['title'] as String,
-        descripiton: json['description'] as String,
-        author: Author.fromJson(json['author']));
-  }
+  // @override
+  // String toString() {
+  //   return '{ ${this.name}, ${this.quantity} }';
+  // }
 }
