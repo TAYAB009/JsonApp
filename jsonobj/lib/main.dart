@@ -30,39 +30,40 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  void getData() async {
+  Future<List<Tag>> getData() async {
     final jsonString = await rootBundle.loadString('assets/data.json');
     final data = jsonDecode(jsonString)['tags'] as List;
-    //print(data);
-    //List<Tag> tagObjs = data.map((e) => Tag.fromJson(e)).toList();
     List<Tag> tagObj = data.map((e) => Tag.fromJson(e)).toList();
-    print(tagObj.runtimeType);
-    for (var i = 0; i < tagObj.length; i++) {
-      print(tagObj[i].name);
-      print(tagObj[i].quantity);
-    }
-    //return tagObj;
+    return tagObj;
   }
 
   @override
   Widget build(BuildContext context) {
-    // print(getData());
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            TextButton(
-              onPressed: () {
-                getData();
+      body: FutureBuilder(
+        future: getData(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            List<Tag> tagList = snapshot.data as List<Tag>;
+            return ListView.builder(
+              itemCount: snapshot.data!.length,
+              itemBuilder: (context, index) {
+                Tag tag = tagList[index];
+                return ListTile(
+                  title: Text(tag.name),
+                  trailing: Text(tag.quantity.toString()),
+                );
               },
-              child: const Text('Print Data'),
-            )
-          ],
-        ),
+            );
+          } else {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+        },
       ),
     );
   }
