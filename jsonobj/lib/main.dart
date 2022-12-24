@@ -33,9 +33,18 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   void mapJson() async {
     final jsonString = await rootBundle.loadString('assets/data.json');
-    // print(jsonString.runtimeType);
-    final test = Data.fromJson(jsonDecode(jsonString));
-    print('${test.name} ${test.age}');
+    //print(jsonString.runtimeType);
+    final data = Tutorial.formJson(jsonDecode(jsonString));
+
+    //print(Author.fromJson(data.name));
+    //print('${data.name} ${data.age}');
+    print('''
+              
+             Name: ${data.author.name}
+             Title: ${data.title} 
+             Description: ${data.descripiton}
+             Age: ${data.author.age}
+     ''');
   }
 
   @override

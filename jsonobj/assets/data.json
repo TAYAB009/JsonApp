@@ -1,4 +1,8 @@
 {
-    "name": "bezkoder",
-    "age": 30
+    "title": "Dart Tutorial",
+    "description": "Way to parse Json",
+    "author": {
+      "name": "bezkoder",
+      "age": 30
+    }
   }
